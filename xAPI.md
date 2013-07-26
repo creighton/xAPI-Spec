@@ -14,7 +14,7 @@
  		*	2.2.1.	[Working Group Participants](#wg)  
 		*	2.2.2.	[Requirements Gathering Participants](#reqparticipants) 
 	*	2.2.3	[Reading Guidelines for the Non-Technically Inclined](#readingguidelines)
-*	3.0.	[Definitions](#defintions)  
+*	3.0.	[Definitions](#definitions)  
 *	4.0.	[Statement](#statement)  
     *	4.1.	[Statement Properties](#stmtprops)  
         *	4.1.1.	[ID](#stmtid)  
@@ -57,10 +57,11 @@
     *	7.10.	[HTTP HEAD](#httphead)  
 *	[Appendix A: Bookmarklet](#AppendixA)  
 *	[Appendix B: Creating an "IE Mode" Request](#AppendixB)  
-*	[Appendix C: Example definitions for Activities of type "cmi.interaction"](#AppendixC)  
-*	[Appendix D: Example Statements](#AppendixD)  
-*	[Appendix E: Converting Statements to 1.0.0](#AppendixE)   
-*	[Appendix F: Example Signed Statement](#AppendixF)
+*	[Appendix C: Example Statements](#AppendixC)  
+*	[Appendix D: Example statement objects of different types](#AppendixD)  
+*	[Appendix E: Example definitions for Activities of type "cmi.interaction"](#AppendixE)  
+*	[Appendix F: Converting Statements to 1.0.0](#AppendixF)   
+*	[Appendix G: Example Signed Statement](#AppendixG)
 
 <a name="revhistory"/>  
 
@@ -95,6 +96,11 @@ Various refinements and clarifications including:
 - Changes to querying the Statement API
 - Signed Statements
 
+###### 1.0.0 to 1.0.1
+Clarifications and additional examples including:
+- Fixed various typos
+- Added additional examples in the appendices
+
 <a name="roleofxapi"/>
 
 ## 2.0 Role of the Experience API  
@@ -107,7 +113,7 @@ associated components on how to accomplish these tasks.
 
 Specifically, the Experience API provides:  
 
-* The structure and definition of Statement, State, learner, Activity and Objects,
+* The structure and definition of Statement, State, Learner, Activity and Objects,
 which are the means by which experiences are conveyed by a Activity Provider.
 
 * Data Transfer methods for the storage and retrieval (but not validation) of
@@ -256,7 +262,7 @@ are based on the specification set described below. For this reason, sections th
 _high-level overview_ of a given facet of the Experience API are labeled **description** or 
 **rationale**. Items in this document labeled as **requirements**, **details** or **examples** are more technical. 
 
-<a name="defintions"/>
+<a name="definitions"/>
  
 ## 3.0 Definitions  
 
@@ -268,7 +274,7 @@ _high-level overview_ of a given facet of the Experience API are labeled **descr
 * [Community of Practice](#def-community-of-practice)
 * [Experience API (xAPI)](#def-experience-api)
 * [Immutable](#def-immutable)
-* [Internationalized Resource Idenfier (IRI)](#def-iri)
+* [Internationalized Resource Identifier (IRI)](#def-iri)
 * [Inverse Functional Identifier](#def-inverse-functional-identifier)
 * [Learning Management System (LMS)](#def-learning-management-system)
 * [Learning Record Store (LRS)](#def-learning-record-store)
@@ -487,7 +493,7 @@ An example of the simplest possible Statement using all properties that MUST or 
 	}
 }
 ```  
-See [Appendix D: Example Statements](#AppendixD) for more examples. 
+See [Appendix C: Example Statements](#AppendixC) for more examples. 
 
 <a name="stmtid"/> 
 
@@ -591,7 +597,7 @@ in a given anonymous or Identified Group.
 
 <a name="inversefunctional">
 
-##### 4.1.2.3 Inverse Functional Identifier
+##### 4.1.2.3 Inverse Functional Idenfier
 ###### Description 
 An "Inverse Functional Identifier" is a value of an Agent or Identified
 Group that is guaranteed to only ever refer to that Agent or Identified Group.
@@ -878,7 +884,7 @@ __Note:__ IRI fragments (sometimes called relative IRLs) are not valid IRIs. As 
 Activity Providers look for and use established, widely adopted, Activity types.
 
 
-###### Requirements for Activity Ids
+###### Activity Id Requirements
 
 * An Activity id MUST be unique.
 * An Activity id MUST always reference the same Activity.
@@ -887,7 +893,7 @@ Activity Providers look for and use established, widely adopted, Activity types.
 that domain remain unique.
 * An Activity id MAY point to metadata or the IRL for the Activity.
 
-###### Requirements for the LRS
+###### LRS Requirements
 
 * An LRS MUST ignore any information which indicates two authors or organizations may have used the same Activity id.
 * An LRS MUST NOT treat references to the same id as references to different Activities.
@@ -898,15 +904,15 @@ SHOULD update the stored Activity Definition accordingly if that decision is pos
 to accept spelling fixes, but it may not accept changes to correct responses.
 
 
-###### Requirements for the Activity Provider
+###### Activity Provider Requirements
 
-* An Activity Provider MUST ensure that Activity ids are not re-used across multiple Activities.
+* An Activity Provider MUST ensure that Activity ids are not reused across multiple Activities.
 * An Activity Provider MUST only generate states or Statements against a certain Activity id that are compatible
 and consistent with states or Statements previously stored against the same id.
 * An Activity Provider MUST NOT allow new versions (i.e. revisions or other platforms) of the Activity 
 to break compatibility.	
 
-###### Requirements for Metadata
+###### Metadata Requirements
 
 * If an Activity IRI is an IRL, an LRS SHOULD attempt to GET that IRL, and include in HTTP
 headers: "Accept: application/json, */*". This SHOULD be done as soon as practical after the LRS
@@ -1015,7 +1021,7 @@ an interaction Activity with the given interactionType.
 
 ###### Example
 
-See [Appendix C](#AppendixC) for examples of Activity Definitions for each of the cmi.interaction types.
+See [Appendix E](#AppendixE) for examples of Activity Definitions for each of the cmi.interaction types.
 
 <a name="agentasobj"/>
 
@@ -1627,7 +1633,7 @@ capability will be available when issuing PUT or POST against the Statement reso
     * SHOULD include a Content-type field in each part's header, for the first part this MUST be "application/json".
 
 
-###### Requirements for the LRS
+###### LRS Requirements
 
 * An LRS MUST include attachments in the Transmission Format described above
 when requested by the Client (see Section [7.2 "Statement API"](#stmtapi)).
@@ -1650,7 +1656,7 @@ Content-Transfer-Encoding of binary for attachment parts.
 __Note:__ There is no requirement that Statement batches using the mime/multipart format
 contain attachments.
 
-###### Requirements for the Client
+###### Client Requirements
 
 * The Client MAY send Statements with attachments as described above.
 * The Client MAY send multiple Statements where some or all have attachments if using "POST".
@@ -1736,7 +1742,7 @@ constrain the behavior of systems processing Statements. For clarity, certain ke
 requirements are documented here, emphasizing where compliant systems have a responsibility
 to act in certain ways.
 
-###### Requirements for the Client
+###### Client Requirements
 
 The following requirements reiterate especially important requirements already 
 included elsewhere, to emphasize, clarify, and provide implementation guidance.  
@@ -1746,7 +1752,7 @@ Complete IRI validation is extremely difficult, so much of the burden for ensuri
 * Keys of language maps MUST be sent with valid RFC 5646 language tags, for similar reasons.
 * A library SHOULD be used to construct IRIs, as opposed to string concatenation. 
 
-###### Requirements for the LRS
+###### LRS Requirements
 
 * The LRS MUST reject Statements
     * with any null values (except inside extensions).
@@ -1802,6 +1808,14 @@ The following table shows the data structure for the results of queries on the S
 		</td>
 	</tr>
 </table>
+
+###### Requirements
+
+* The IRL retrieved from the more property MUST be usable for at least 24 hours after it is returned by the LRS. 
+* An LRS MAY include all necessary information within the more property IRL to continue the query to avoid the 
+need to store IRLs and associated query data.
+* An LRS SHOULD NOT generate extremely long IRLs within the more property.
+* The consumer SHOULD NOT attempt to interpret any meaning from the IRL returned from the more property.
 
 <a name="voided"/>
 #### 4.3 Voided
@@ -1877,6 +1891,13 @@ these Statements without trusting the system they were first recorded in, or per
 without access to that system. Digital signatures will enable a third-party system
 to validate such Statements.
 
+##### Details
+
+Signed Statements include a JSON web signature (JWS) as an attachment. This allows
+the original serialization of the Statement to be included along with the signature.
+For interoperability, the "RSA + SHA" series of JWS algorithms have been selected, and
+for discoverability of the signer X.509 certificates SHOULD be used.
+
 ##### Requirements
 
 * A Signed Statement MUST include a JSON web signature (JWS) as defined here:
@@ -1889,11 +1910,11 @@ before the signature was added.
 X.509 certificate.
 * If X.509 was used to sign, the JWS header SHOULD include the "x5c" property containing
 the associated certificate chain.
-* The LRS MUST reject requests to store Statements that contain malformed signatures,
-with HTTP 400 and SHOULD include a message describing the problem in the response.
+* The LRS MUST reject requests to store Statements that contain malformed signatures, with HTTP 400
+* The LRS SHOULD include a message in the response of a rejected statement
 In order to verify signatures are well formed, the LRS MUST do the following:
     * Decode the JWS signature, and load the signed serialization of the Statement from the
-JWS signature payload.
+      JWS signature payload.
     * Validate that the "original" Statement is logically equivalent to the received Statement.
     	* When making this equivilance check, differences which could have been caused by
     	allowed or required LRS processing of "id", "authority", "stored", "timestamp", or
@@ -1902,20 +1923,15 @@ JWS signature payload.
     certificate as defined in JWS.
 * Clients MUST NOT assume a signature is valid simply because an LRS has accepted it.
 
-##### Details
-
-Signed Statements include a JSON web signature (JWS) as an attachment. This allows
-the original serialization of the Statement to be included along with the signature.
-For interoperability, the "RSA + SHA" series of JWS algorithms have been selected, and
-for discoverability of the signer X.509 certificates SHOULD be used.
-
-See <a href="#AppendixF">Appendix F: Example Signed Statement</a> for an example.
-
 __Note:__ The step of validating against the included X.509 certificate is intended as a
-way to catch mistakes in the signature, not as a security measure. Clients MUST NOT assume
-a signature is valid simply because an LRS has accepted it. The steps to authenticate
+way to catch mistakes in the signature, not as a security measure. The steps to authenticate
 a signed Statement will vary based on the degree of certainty required and are outside
 the scope of this specification.
+
+
+##### Example
+See <a href="#AppendixG">Appendix G: Example Signed Statement</a> for an example.
+
 
 
 <a name="misctypes"/>
@@ -1948,14 +1964,14 @@ languages.
 <a name="miscext"/> 
 
 ### 5.3 Extensions
-Extensions are defined by a map. The keys of that map MUST be IRLs, and the 
+Extensions are defined by a map. The keys of that map MUST be IRIs, and the 
 values MAY be any JSON value or data structure. The meaning and structure of 
-extension values under an IRL key are defined by the person who coined the IRL, 
-who SHOULD be the owner of the IRL, or have permission from the owner. The owner 
-of the IRL SHOULD make a human-readable description of the intended meaning of 
-the extension supported by the IRL accessible at the IRL. A learning record store 
-MUST NOT reject an Experience API Statement based on the values of the extensions 
-map.  
+extension values under an IRI key are defined by the person who coined the IRI, 
+who SHOULD be the owner of the IRI, or have permission from the owner. If the
+extension key is an IRL, the owner of the IRL SHOULD make a human-readable description
+of the intended meaning of the extension supported by the IRL accessible at the IRL.
+A learning record store  MUST NOT reject an Experience API Statement based on the
+values of the extensions map.
 
 Extensions are available as part of Activity Definitions, as part of Statement 
 context, or as part of some Statement result. In each case, they're intended to 
@@ -2064,7 +2080,7 @@ Starting with 1.0.0, xAPI will be versioned according to [Semantic Versioning 1.
 
 Example:  ``X-Experience-API-Version : 1.0.0``
 
-###### Requirements for the LRS:
+###### LRS Requirements
 
 * MUST include the "X-Experience-API-Version" header in every response.
 * MUST set this header to "1.0.0".
@@ -2074,7 +2090,7 @@ Example:  ``X-Experience-API-Version : 1.0.0``
 * MUST make these rejects by responding with an HTTP 400 error including a short description of the problem.
 
 
-###### Requirements for the Client:
+###### Client Requirements
 
 * SHOULD tolerate receiving responses with a version of "1.0.0" or later.
 * SHOULD tolerate receiving data structures with additional properties.
@@ -2084,7 +2100,7 @@ Example:  ``X-Experience-API-Version : 1.0.0``
 
 * Systems MUST NOT convert Statements of newer versions into a prior version format, e.g., in order to handle version differences.
 * Systems MAY convert Statements of older versions into a newer version only by following the methods described in
-<a href="#AppendixE">Appendix E: Converting Statements to 1.0.0</a>.
+<a href="#AppendixF">Appendix F: Converting Statements to 1.0.0</a>.
 
 <a name="concurrency"/> 
 ### 6.3 Concurrency
@@ -3116,30 +3132,32 @@ identical HTTP GET request except:
 
 ## Appendix A: Bookmarklet
 
-An xAPI Bookmarklet enables individual user tracking with base authentication. Examples 
-could be an "I think this," "I learned this," "I like this," or "I don't like this" Statement 
-that allows self-reporting. The following is an example of such a bookmarklet, and the Statement 
-that this bookmarklet would send if used on the page: http://adlnet.gov/xapi.
+###### Description
+The following is a prototype of a Bookmarklet configured using the Experience API.
 
-The bookmarklet MAY be provided by the LRS to track a specific user
-for behavior analytics.
+###### Details
+An xAPI Bookmarklet enables individual user tracking with basic authentication. Examples could be 
+an "I think this," "I learned this," "I like this," or "I don't like this" Statement that allows self-reporting. 
+The following code is an implementation of such a bookmarklet, and the Statement that this bookmarklet 
+would send if used on the page: http://adlnet.gov/xapi.
 
-Therefore the LRS IRL, authentication, and Actor information is hard coded into 
-the bookmarklet. Note that since the authorization token must be included in 
-the bookmarklet, the LRS should provide a token with limited privileges, 
-Ideally the token should enable the storage of self-reported learning 
-Statements only. 
+The bookmarklet could also be provided by the LRS to track a specific user for behavior analytics.
 
-The UUID SHOULD be included as part of the bookmarklet PUT Statement. If a Statement 
-is POSTed without a UUID, the LRS MUST generate one.
+###### Usage
+The LRS IRL (variable "url" in the example below), authentication, and Actor information is 
+hard coded into the bookmarklet.
 
-In order to allow cross-domain reporting of Statements, a browser that supports 
-the "Access-Control-Allow-Origin" and "Access-Control-Allow-Methods" headers 
-must be used, such as IE 8+, FF 3.5+, Safari 4+, Safari iOS Chrome, or Android 
-browser. Additionally the server must set the required headers.  
+__Note:__ Since the authorization token must be included in the bookmarklet, it is recommended the LRS 
+provide a token with limited privileges. Enabling the storage of self-reported learning Statements is sufficient
+permission to get full use from this prototype.
 
-In the example below, the following values in the first few lines should be replaced
-with your own values. All other values should be left as they are. 
+In order to allow cross-domain reporting of Statements, a browser that supports the "Access-Control-Allow-Origin" 
+and "Access-Control-Allow-Methods" headers is necessary, such as IE 8+, FF 3.5+, Safari 4+, Safari iOS Chrome, or 
+Android browser. The server needs to set required headers based on the browser.
+
+In the example below, the following values in the first few lines can be replaced with your own values. All other 
+values should be left as they are. Be sure to include a UUID as a part of the bookmarket PUT statement, because 
+if one is not provided, the LRS will generate one.
 
 <table>
 	<tr>
@@ -3148,7 +3166,7 @@ with your own values. All other values should be left as they are.
 	</tr>
 	<tr>
 		<td>http://localhost:8080/xAPI/</td>
-		<td>Endpoint of the LRS to send the Statements to.</td>
+		<td>Endpoint of the LRS(where the Statements will be sent).</td>
 	</tr>
 	<tr>
 		<td>dGVzdDpwYXNzd29yZA==</td>
@@ -3287,8 +3305,295 @@ function getIEModeRequest(method, url, headers, data){
 }
 ``` 
 <a name="AppendixC"/>  
+ 
+## Appendix C: Example statements
 
-## Appendix C: Example definitions for Activities of type "cmi.interaction"
+Example of a simple statement (line breaks are for display purposes only):  
+```
+{
+	"id":"fd41c918-b88b-4b20-a0a5-a4c32391aaa0",
+	"actor":{
+		"objectType": "Agent",
+		"name":"Project Tin Can API",
+		"mbox":"mailto:user@example.com"
+	},
+	"verb":{
+		"id":"http://adlnet.gov/expapi/verbs/created",
+		"display":{ 
+			"en-US":"created" 
+		}
+	},
+	"object":{
+		"id":"http://example.adlnet.gov/xapi/example/simplestatement",
+		"definition":{
+			"name":{ 
+				"en-US":"simple statement" 
+			},
+			"description":{ 
+				"en-US":"A simple Experience API statement. Note that the LRS 
+				does not need to have any prior information about the Actor (learner), the 
+				verb, or the Activity/object." 
+			}
+		}
+	}
+}
+```   
+Typical simple completion with verb "attempted":  
+```
+{
+	"actor":{
+        "objectType": "Agent",
+		"name":"Example Learner",
+		"mbox":"mailto:example.learner@adlnet.gov"
+	},
+	"verb":{
+		"id":"http://adlnet.gov/expapi/verbs/attempted",
+		"display":{
+			"en-US":"attempted"
+		}
+	},
+	"object":{
+		"id":"http://example.adlnet.gov/xapi/example/simpleCBT",
+		"definition":{
+			"name":{
+				"en-US":"simple CBT course"
+			},
+			"description":{
+				"en-US":"A fictitious example CBT course."
+			}
+		}
+	},
+	"result":{
+		"score":{
+			"scaled":0.95
+		},
+		"success":true,
+		"completion":true
+	}
+}
+```  
+A long example statement showcasing most of the properties available. This example shows
+a statement returned by an LRS including the authority and stored propeties set by the LRS:  
+```
+{
+    "id": "6690e6c9-3ef0-4ed3-8b37-7f3964730bee",
+    "actor": {
+        "name": "Team PB",
+        "mbox": "mailto:teampb@example.com",
+        "member": [
+            {
+                "name": "Andrew Downes",
+                "account": {
+                    "homePage": "http://www.example.com",
+                    "name": "13936749"
+                },
+                "objectType": "Agent"
+            },
+            {
+                "name": "Toby Nichols",
+                "openid": "http://toby.openid.example.org/",
+                "objectType": "Agent"
+            },
+            {
+                "name": "Ena Hills",
+                "mbox_sha1sum": "esydnag7fhxkquopagrr4aiputa=",
+                "objectType": "Agent"
+            }
+        ],
+        "objectType": "Group"
+    },
+    "verb": {
+        "id": "http://adlnet.gov/expapi/verbs/attended",
+        "display": {
+            "en-GB": "attended",
+            "en-US": "attended"
+        }
+    },
+    "result": {
+        "extensions": {
+            "http://example.com/profiles/meetings/resultextensions/minuteslocation": "X:\\meetings\\minutes\\examplemeeting.one"
+        },
+        "success": true,
+        "completion": true,
+        "response": "We agreed on some example actions.",
+        "duration": "PT1H0M0S"
+    },
+    "context": {
+        "registration": "ec531277-b57b-4c15-8d91-d292c5b2b8f7",
+        "contextActivities": {
+            "parent": [
+                {
+                    "id": "http://www.example.com/meetings/series/267",
+                    "objectType": "Activity"
+                }
+            ],
+            "category": [
+                {
+                    "id": "http://www.example.com/meetings/categories/teammeeting",
+                    "objectType": "Activity",
+                    "definition": {
+			            "name": {
+			                "en": "team meeting"
+			            },
+			            "description": {
+			                "en": "A category of meeting used for regular team meetings."
+			            },
+			            "type": "http://example.com/expapi/activities/meetingcategory"
+			        }
+                }
+            ],
+            "other": [
+                {
+                    "id": "http://www.example.com/meetings/occurances/34257",
+                    "objectType": "Activity"
+                },
+                {
+                    "id": "http://www.example.com/meetings/occurances/3425567",
+                    "objectType": "Activity"
+                }
+            ]
+        },
+        "instructor" :
+        {
+        	"name": "Andrew Downes",
+            "account": {
+                "homePage": "http://www.example.com",
+                "name": "13936749"
+            },
+            "objectType": "Agent"
+        },
+        "team":
+        {
+        	"name": "Team PB",
+        	"mbox": "mailto:teampb@example.com",
+        	"objectType": "Group"
+        }, 
+        "platform" : "Example virtual meeting software",
+        "language" : "tlh",
+        "statement" : {
+        	"objectType":"StatementRef",
+        	"id" :"6690e6c9-3ef0-4ed3-8b37-7f3964730bee"
+        }
+        
+    },
+    "timestamp": "2013-05-18T05:32:34.804Z",
+    "stored": "2013-05-18T05:32:34.804Z",
+    "authority": {
+        "account": {
+            "homePage": "http://cloud.scorm.com/",
+            "name": "anonymous"
+        },
+        "objectType": "Agent"
+    },
+    "version": "1.0.0",
+    "object": {
+        "id": "http://www.example.com/meetings/occurances/34534",
+        "definition": {
+            "extensions": {
+                "http://example.com/profiles/meetings/activitydefinitionextensions/room": {"name": "Kilby", "id" : "http://example.com/rooms/342"}
+            },
+            "name": {
+                "en-GB": "example meeting",
+                "en-US": "example meeting"
+            },
+            "description": {
+                "en-GB": "An example meeting that happened on a specific occasion with certain people present.",
+                "en-US": "An example meeting that happened on a specific occasion with certain people present."
+            },
+            "type": "http://adlnet.gov/expapi/activities/meeting",
+            "moreInfo": "http://virtualmeeting.example.com/345256"
+        },
+        "objectType": "Activity"
+    }
+}
+```  
+<a name="AppendixD"/>  
+
+## Appendix D: Example statement objects of different types
+
+The object of a statement can be an activity, agent, group or statement. 
+This appendix provides one example of each. 
+
+###### Activity
+```
+{
+    "id": "http://www.example.co.uk/exampleactivity",
+    "definition": {
+        "name": {
+            "en-GB": "example activity",
+            "en-US": "example activity"
+        },
+        "description": {
+            "en-GB": "An example of an activity",
+            "en-US": "An example of an activity"
+        },
+        "type": "http://www.example.co.uk/types/exampleactivitytype"
+    },
+    "objectType": "Activity"
+}
+```
+
+###### Agent
+```
+{
+    "name": "Andrew Downes",
+    "mbox": "mailto:andrew@example.co.uk",
+    "objectType": "Agent"
+}
+```
+
+###### Group
+This example shows an identified group with members. 
+```
+{
+    "name": "Example Group",
+    "account" : {
+    	"homePage" : "http://example.com/homePage",
+    	"name" : "GroupAccount"
+    },
+    "objectType": "Group",
+    "member": [
+            {
+                "name": "Andrew Downes",
+                "mbox": "mailto:andrew@example.com",
+                "objectType": "Agent"
+            },
+            {
+                "name": "Aaron Silvers",
+                "openid": "aaron.openid.example.org",
+                "objectType": "Agent"
+            }
+        ],
+}
+```
+
+
+###### Statement
+This example shows a Sub-Statement object whose object is a Statement Reference.
+
+```
+{
+        "objectType": "SubStatement",
+        "actor" : {
+            "objectType": "Agent", 
+            "mbox":"mailto:agent@example.com" 
+        },
+        "verb" : { 
+            "id":"http://example.com/confirmed", 
+            "display":{
+                "en":"confirmed"
+            } 
+        },
+        "object": {
+            "objectType":"StatementRef",
+    		"id" :"9e13cefd-53d3-4eac-b5ed-2cf6693903bb"
+        }
+    }
+```
+
+<a name="AppendixE"/>  
+
+## Appendix E: Example definitions for Activities of type "cmi.interaction"
 
 ###### true-false  
 
@@ -3566,85 +3871,16 @@ function getIEModeRequest(method, url, headers, data){
 }
 ```
 
-<a name="AppendixD"/>  
- 
-## Appendix D: Example statements
+<a name="AppendixF"/>
 
-Example of a simple statement (line breaks are for display purposes only):  
-```
-{
-	"id":"fd41c918-b88b-4b20-a0a5-a4c32391aaa0",
-	"actor":{
-		"objectType": "Agent",
-		"name":"Project Tin Can API",
-		"mbox":"mailto:user@example.com"
-	},
-	"verb":{
-		"id":"http://adlnet.gov/expapi/verbs/created",
-		"display":{ 
-			"en-US":"created" 
-		}
-	},
-	"object":{
-		"id":"http://example.adlnet.gov/xapi/example/simplestatement",
-		"definition":{
-			"name":{ 
-				"en-US":"simple statement" 
-			},
-			"description":{ 
-				"en-US":"A simple Experience API statement. Note that the LRS 
-				does not need to have any prior information about the Actor (learner), the 
-				verb, or the Activity/object." 
-			}
-		}
-	}
-}
-```   
-Typical simple completion with verb "attempted":  
-```
-{
-	"actor":{
-        "objectType": "Agent",
-		"name":"Example Learner",
-		"mbox":"mailto:example.learner@adlnet.gov"
-	},
-	"verb":{
-		"id":"http://adlnet.gov/expapi/verbs/attempted",
-		"display":{
-			"en-US":"attempted"
-		}
-	},
-	"object":{
-		"id":"http://example.adlnet.gov/xapi/example/simpleCBT",
-		"definition":{
-			"name":{
-				"en-US":"simple CBT course"
-			},
-			"description":{
-				"en-US":"A fictitious example CBT course."
-			}
-		}
-	},
-	"result":{
-		"score":{
-			"scaled":0.95
-		},
-		"success":true,
-		"completion":true
-	}
-}
-```  
-
-<a name="AppendixE"/>
-
-## Appendix E: Converting Statements to 1.0.0
+## Appendix F: Converting Statements to 1.0.0
 
 ######Rationale
 This is a 1.0.0 specification, and as such implementers should not have to consider prior
 versions of the specification. However, prior versions did see notable adoption. This data
 conversion is specified in order
 to preserve the data tracked using earlier versions, and make it available to new implementers
-in a consistant manner.
+in a consistent manner.
 
 ######Details
 
@@ -3819,8 +4055,8 @@ Converted to 1.0.0:
 }
 ```
 
-<a name="AppendixF"/>
-## Appendix F: Example Signed Statement
+<a name="AppendixG"/>
+## Appendix G: Example Signed Statement
 An example signed Statement, as described in: <a href="#signature">4.4 Signed Statements</a>.
 
 The original Statement serialization to be signed. New lines in this example are included
